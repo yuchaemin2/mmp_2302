@@ -1,0 +1,15 @@
+# .gitignore 파일 내용
+
+# 대용량 파일 무시
+ch10/yolov3.weights
+ch9/deeplabv3_xception65_ade20k.h5
+ch9/mask_rcnn_coco.h5
+ch8/cnn_for_stanford_dogs.h5
+ch9/xception_pascalvoc.pb
+
+# 가상환경 또는 빌드 파일 무시
+build/
+dist/
+venv/
+
+# 이하 원하는 파일 또는 디렉토리 추가
