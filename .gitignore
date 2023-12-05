@@ -6,6 +6,7 @@ ch9/deeplabv3_xception65_ade20k.h5
 ch9/mask_rcnn_coco.h5
 ch8/cnn_for_stanford_dogs.h5
 ch9/xception_pascalvoc.pb
+pybo/data/yolov3.weights
 
 # 가상환경 또는 빌드 파일 무시
 build/

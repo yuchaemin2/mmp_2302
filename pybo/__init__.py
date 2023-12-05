@@ -7,7 +7,7 @@ import sys
 
 from pybo.img_processing import embossing, cartoon, pencilGray, pencilColor, oilPainting, enhance
 
-dir = '/Users/yuchaemin/Documents/mmp02/pybo/data'
+dir = '/Users/yuchaemin/Documents/mmp02/pybo/data/'
 
 def create_app():
     app = Flask(__name__, static_url_path='')
@@ -105,14 +105,12 @@ def create_app():
         return ""
 
     def construct_yolo_v3():
-        f = open(dir+'coco_names_kor.txt', 'r', encoding='UTF-8')
+        f = open(dir+'coco_names.txt')
         class_names = [line.strip() for line in f.readlines()]
 
-        model = cv.dnn.readNet('yolov3.weights', dir+'yolov3.cfg')
+        model = cv.dnn.readNet(dir+'yolov3.weights', dir+'yolov3.cfg')
         layer_names = model.getLayerNames()
-        # print(layer_names)
         out_layers = [layer_names[i - 1] for i in model.getUnconnectedOutLayers()]
-        # print(out_layers)
 
         return model, out_layers, class_names
 
@@ -151,7 +149,7 @@ def create_app():
         model, out_layers, class_names = construct_yolo_v3()  # YOLO 모델 생성
         colors = np.random.uniform(0, 255, size=(len(class_names), 3))  # 부류마다 색깔
 
-        cap = cv.VideoCapture(0, cv.CAP_DSHOW)
+        cap = cv.VideoCapture(0)
         if not cap.isOpened(): sys.exit('카메라 연결 실패')
 
         while True:
@@ -166,20 +164,16 @@ def create_app():
                 cv.rectangle(frame, (x1, y1), (x2, y2), colors[id], 2)
                 cv.putText(frame, text, (x1, y1 + 30), cv.FONT_HERSHEY_PLAIN, 1.5, colors[id], 2)
 
-            # cv.imshow("Object detection from video by YOLO v.3", frame)
-
-            # key = cv.waitKey(1)
-            # if key == ord('q'): break
-
             ret, buffer = cv.imencode('.jpg', frame) # NOARRAY를 JPEG으로 이미지 디코딩(압축)
             frame = buffer.tobytes()
 
             # return과 동일하게 값을 호출한 곳으로 전달
+            # yield는 잠시 함수 바깥의 코드가 실행되도록 양보하여 값을 가져가게 한 뒤 다시 제너레이터 안의 코드를 계속 실행하는 방식
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-    @app.route('/video_yolo/')
-    def webcam_yolo():
+    @app.route('/video_yolo')
+    def video_yolo():
         return Response(capture_yolo(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
     @app.route('/webcam_yolo/')
@@ -188,8 +182,8 @@ def create_app():
 
     @app.route('/stop')
     def stop():
-        cap.release()
-    return
+        cap.release() # 카메라와 연결을 끊음
+        return render_template('index.html')
 
     @app.route('/')
     def index():

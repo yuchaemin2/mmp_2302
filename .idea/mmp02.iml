@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/pybo/venv/include" />
+      <excludeFolder url="file://$MODULE_DIR$/pybo/venv/lib/python3.10/site-packages/pip/_internal/operations/build" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (mmp02)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
