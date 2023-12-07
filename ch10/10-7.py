@@ -19,9 +19,9 @@ while True:
     
     if res.multi_face_landmarks:
         for landmarks in res.multi_face_landmarks:
-            mp_drawing.draw_landmarks(image=frame,landmark_list=landmarks,connections=mp_mesh.FACEMESH_TESSELATION,landmark_drawing_spec=None,connection_drawing_spec=mp_styles.get_default_face_mesh_tesselation_style())
+            # mp_drawing.draw_landmarks(image=frame,landmark_list=landmarks,connections=mp_mesh.FACEMESH_TESSELATION,landmark_drawing_spec=None,connection_drawing_spec=mp_styles.get_default_face_mesh_tesselation_style())
             mp_drawing.draw_landmarks(image=frame,landmark_list=landmarks,connections=mp_mesh.FACEMESH_CONTOURS,landmark_drawing_spec=None,connection_drawing_spec=mp_styles.get_default_face_mesh_contours_style())
-            mp_drawing.draw_landmarks(image=frame,landmark_list=landmarks,connections=mp_mesh.FACEMESH_IRISES,landmark_drawing_spec=None,connection_drawing_spec=mp_styles.get_default_face_mesh_iris_connections_style())
+            # mp_drawing.draw_landmarks(image=frame,landmark_list=landmarks,connections=mp_mesh.FACEMESH_IRISES,landmark_drawing_spec=None,connection_drawing_spec=mp_styles.get_default_face_mesh_iris_connections_style())
         
     cv.imshow('MediaPipe Face Mesh',cv.flip(frame,1))		# 좌우반전
     if cv.waitKey(5)==ord('q'):

@@ -7,7 +7,7 @@ mp_styles=mp.solutions.drawing_styles
 
 pose=mp_pose.Pose(static_image_mode=False,enable_segmentation=True,min_detection_confidence=0.5,min_tracking_confidence=0.5)
 
-cap=cv.VideoCapture(0,cv.CAP_DSHOW)
+cap=cv.VideoCapture(0)
 
 while True:
     ret,frame=cap.read()
@@ -18,7 +18,10 @@ while True:
     res=pose.process(cv.cvtColor(frame,cv.COLOR_BGR2RGB))
     
     mp_drawing.draw_landmarks(frame,res.pose_landmarks,mp_pose.POSE_CONNECTIONS,landmark_drawing_spec=mp_styles.get_default_pose_landmarks_style())
-    
+
+    print(res.pose_landmarks)
+    print("===============================")
+
     cv.imshow('MediaPipe pose',cv.flip(frame,1)) # 좌우반전
     if cv.waitKey(5)==ord('q'):
       mp_drawing.plot_landmarks(res.pose_world_landmarks,mp_pose.POSE_CONNECTIONS)
